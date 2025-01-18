@@ -5,7 +5,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
-
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.Telusko.TopmateApplication.Repo.ITopmateRepo;
@@ -19,11 +19,12 @@ public class ITopmateImplementation implements ITopmateService
 	private ITopmateRepo obj1;
 	@Autowired
 	private ITopmateRepo1 obj3;
-	
+	@Autowired
+	private PasswordEncoder object;
 
 	@Override
 	public String registerUser(User user) {
-	
+	    user.setPassword(object.encode(user.getPassword()));
 		User uss=obj3.save(user);
 		//emailService.sendRegistrationEmail(user.getEmail(), user.getName());
 		return "user has Been Registered Successsfully ,Confirmation Email Has Been Sent....";
